@@ -60,7 +60,7 @@ public class PacketChannel implements Channel {
     public void authenticationComplete() {
         authenticationComplete = true;
     }
-
+// https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_basic_packets.html#sect_protocol_basic_packets_packet
     public byte[] read() throws IOException {
         int length = inputStream.readInteger(3);
         int sequence = inputStream.read(); // sequence

@@ -27,7 +27,7 @@ public class ErrorPacket implements Packet {
     private int errorCode;
     private String sqlState;
     private String errorMessage;
-
+// https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_basic_err_packet.html
     public ErrorPacket(byte[] bytes) throws IOException {
         ByteArrayInputStream buffer = new ByteArrayInputStream(bytes);
         this.errorCode = buffer.readInteger(2);

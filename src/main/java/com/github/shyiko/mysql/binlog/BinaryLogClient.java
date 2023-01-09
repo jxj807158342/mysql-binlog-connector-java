@@ -566,6 +566,7 @@ public class BinaryLogClient implements BinaryLogClientMXBean {
                     throw new IOException("Failed to connect to MySQL on " + hostname + ":" + port +
                         ". Please make sure it's running.", e);
                 }
+                // https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_basic_packets.html#sect_protocol_basic_packets_packet
                 GreetingPacket greetingPacket = receiveGreeting();
 
                 detectMariaDB(greetingPacket);
