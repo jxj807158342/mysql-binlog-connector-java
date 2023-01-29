@@ -32,7 +32,7 @@ public class GreetingPacket implements Packet {
     private int serverCollation;
     private int serverStatus;
     private String pluginProvidedData;
-
+// https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_connection_phase_packets_protocol_handshake_v10.html
     public GreetingPacket(byte[] bytes) throws IOException {
         ByteArrayInputStream buffer = new ByteArrayInputStream(bytes);
         this.protocolVersion = buffer.readInteger(1);

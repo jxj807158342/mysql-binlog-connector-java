@@ -169,6 +169,7 @@ public class ByteArrayInputStream extends InputStream {
 	 * @throws IOException in case of malformed number or EOF
 	 * @return long or null
      */
+    // https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_basic_dt_integers.html#sect_protocol_basic_dt_int_fixed
     public Number readPackedNumber() throws IOException {
         int b = this.read();
         if (b < 251) {

@@ -576,6 +576,7 @@ public class BinaryLogClient implements BinaryLogClientMXBean {
                 channel.authenticationComplete();
 
                 connectionId = greetingPacket.getThreadId();
+                // 2023 01 17  读到这 太棒了
                 if ("".equals(binlogFilename)) {
                     setupGtidSet();
                 }
@@ -591,6 +592,7 @@ public class BinaryLogClient implements BinaryLogClientMXBean {
                 setupConnection();
                 gtid = null;
                 tx = false;
+                // 读到这2023/01/23
                 requestBinaryLogStream();
             } catch (IOException e) {
                 disconnectChannel();
