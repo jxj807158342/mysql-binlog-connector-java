@@ -625,6 +625,8 @@ public class BinaryLogClient implements BinaryLogClientMXBean {
             if (keepAlive && !isKeepAliveThreadRunning()) {
                 spawnKeepAliveThread();
             }
+            // 2023/01/29 日志解析
+            // https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_replication_binlog_event.html#sect_protocol_replication_event_rotate
             ensureEventDataDeserializer(EventType.ROTATE, RotateEventDataDeserializer.class);
             synchronized (gtidSetAccessLock) {
                 if (this.gtidEnabled) {
@@ -702,6 +704,7 @@ public class BinaryLogClient implements BinaryLogClientMXBean {
 
             public Object call() throws Exception {
                 connectLatch.countDown();
+                // 父线程等待 子线程执行完，再执行
                 thread.join();
                 return null;
             }

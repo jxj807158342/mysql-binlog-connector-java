@@ -6,6 +6,8 @@ import org.junit.Test;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
@@ -26,6 +28,8 @@ public class AjieTest {
         int port = 0;
         Socket socket = new Socket();
         socket.connect((SocketAddress) new InetSocketAddress(hostname, port), 3000);
+        InputStream inputStream = socket.getInputStream();
+        OutputStream outputStream = socket.getOutputStream();
     }
 
     @Test
@@ -44,14 +48,22 @@ public class AjieTest {
     }
 
     @Test
-    public void bufferTest() {
+    public void readBufferTest() {
         int length = 4;
         byte[] buffer = new byte[]{79, 60, 1, 0};
         //                         4F   3c 01  00
+        // 左移 i<<3  是因为8位
+        // 1 左移3位是 8
+        // 60 左移 8位
+        //    第一步 i==0
+        // i=0  00 00 4F     0000 0000 0000 0000 0100 1111
+        // i=1  00 3C 00     0000 0000 0011 1100 0000 0000
+        // i=2  01 00 00     0001 0000 0000 0000 0000 0000
         long result = 0;
         for (int i = 0; i < length; ++i) {
-            System.out.println("(long)buffer[i]) << (i << 3)==" + (((long) buffer[i]) << (i << 3)));
+            System.out.println("result=" + result);
             result |= (((long) buffer[i]) << (i << 3));
+            System.out.println(" result |= (((long) buffer[i]) << (i << 3));="+result);
         }
         System.out.println(result);
         //  ox 00 0134cf
@@ -64,6 +76,33 @@ public class AjieTest {
         // 127
         System.out.println(result2);
     }
+    @Test
+    public void writeBufferTest(){
+        // 0x 08 82 04       557572
+       // 0x04  0x82  0x08  295432
+
+        int length = 3;
+       int value =557572;
+        //                         4F   3c 01  00
+        // 左移 i<<3  是因为8位
+        // 1 左移3位是 8
+        // 60 左移 8位
+        //    第一步 i==0
+        // i=0  00 00 4F     0000 0000 0000 0000 0100 1111
+        // i=1  00 3C 00     0000 0000 0011 1100 0000 0000
+        // i=2  01 00 00     0001 0000 0000 0000 0000 0000
+
+        for (int i = 0; i < length; ++i) {
+            System.out.println("value=" + value);
+            int result = 0X000000FF & (value>>> (i << 3));
+            System.out.println(" result ="+result);
+        }
+
+        //  ox 00 0134cf
+        //       80975
+
+    }
+
 
     @Test
     public void test12345() throws IOException {

@@ -49,7 +49,7 @@ public class AuthenticateSecurityPasswordCommand implements Command {
     public void setCollation(int collation) {
         this.collation = collation;
     }
-
+// https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_connection_phase_packets_protocol_handshake_response.html
     @Override
     public byte[] toByteArray() throws IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();

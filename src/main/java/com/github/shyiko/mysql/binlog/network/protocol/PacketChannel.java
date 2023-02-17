@@ -45,6 +45,7 @@ public class PacketChannel implements Channel {
 
     public PacketChannel(Socket socket) throws IOException {
         this.socket = socket;
+        // 装饰者模式
         this.inputStream = new ByteArrayInputStream(new BufferedSocketInputStream(socket.getInputStream()));
         this.outputStream = new ByteArrayOutputStream(socket.getOutputStream());
     }
