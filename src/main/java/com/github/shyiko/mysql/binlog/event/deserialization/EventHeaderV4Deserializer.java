@@ -24,6 +24,7 @@ import java.io.IOException;
 /**
  * @author <a href="mailto:stanley.shyiko@gmail.com">Stanley Shyiko</a>
  */
+// https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_replication_binlog_event.html#sect_protocol_replication_binlog_event_header
 public class EventHeaderV4Deserializer implements EventHeaderDeserializer<EventHeaderV4> {
 
     @Override

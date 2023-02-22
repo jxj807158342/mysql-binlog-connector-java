@@ -581,6 +581,7 @@ public class BinaryLogClient implements BinaryLogClientMXBean {
                     setupGtidSet();
                 }
                 if (binlogFilename == null) {
+                    // 获取binlog 文件名称和位置
                     fetchBinlogFilenameAndPosition();
                 }
                 if (binlogPosition < 4) {
@@ -589,10 +590,12 @@ public class BinaryLogClient implements BinaryLogClientMXBean {
                     }
                     binlogPosition = 4;
                 }
+                // 获取checkSum和 是否开启心跳
                 setupConnection();
                 gtid = null;
                 tx = false;
                 // 读到这2023/01/23
+                // binglog 写文件位置和文件名
                 requestBinaryLogStream();
             } catch (IOException e) {
                 disconnectChannel();
@@ -1197,10 +1200,17 @@ public class BinaryLogClient implements BinaryLogClientMXBean {
     private ResultSetRowPacket[] readResultSet() throws IOException {
         List<ResultSetRowPacket> resultSet = new LinkedList<>();
         byte[] statementResult = channel.read();
+        System.out.println("======statementResult="+statementResult.length);
         checkError(statementResult);
-
-        while ((channel.read())[0] != (byte) 0xFE /* eof */) { /* skip */ }
+        byte[] test=null;
+        while (( test =channel.read())[0] != (byte) 0xFE /* eof */) {
+            /* skip */
+            System.out.println("======skip");
+            System.out.println("======skipTest="+test.length);
+        }
+        System.out.println("======等于="+test.length);
         for (byte[] bytes; (bytes = channel.read())[0] != (byte) 0xFE /* eof */; ) {
+            System.out.println("======bytes="+bytes.length);
             checkError(bytes);
             resultSet.add(new ResultSetRowPacket(bytes));
         }

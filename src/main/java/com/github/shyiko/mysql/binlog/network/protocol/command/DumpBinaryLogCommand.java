@@ -40,6 +40,7 @@ public class DumpBinaryLogCommand implements Command {
         this(serverId, binlogFilename, binlogPosition);
         this.sendAnnotateRowsEvent = sendAnnotateRowsEvent;
     }
+    // https://dev.mysql.com/doc/dev/mysql-server/latest/page_protocol_com_binlog_dump.html
 
     @Override
     public byte[] toByteArray() throws IOException {
