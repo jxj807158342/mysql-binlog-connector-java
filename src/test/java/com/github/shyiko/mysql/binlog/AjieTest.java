@@ -1,5 +1,6 @@
 package com.github.shyiko.mysql.binlog;
 
+import com.github.shyiko.mysql.binlog.event.Event;
 import com.github.shyiko.mysql.binlog.io.ByteArrayOutputStream;
 import org.junit.Test;
 
@@ -44,6 +45,13 @@ public class AjieTest {
 //        }
         BinaryLogClient client = new BinaryLogClient("47.92.89.144", 3306, "root", "Hive@20221101!");
         client.setServerId(12345);
+        client.registerEventListener(new BinaryLogClient.EventListener() {
+            @Override
+            public void onEvent(Event event) {
+                System.out.println("event.getHeader()==="+event.getHeader());
+                System.out.println("event.getData()====="+event.getData());
+            }
+        });
         client.connect();
     }
 
