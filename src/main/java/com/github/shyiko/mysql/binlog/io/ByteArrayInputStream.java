@@ -92,6 +92,14 @@ public class ByteArrayInputStream extends InputStream {
 	 * @throws IOException in case of EOF
 	 * @return string
      */
+    // Endianness defines the order of bytes within multi-byte values.
+    // Character strings are arrays of single-byte values.
+    // So each value (character in the string) is the same on both little-endian and big-endian architectures,
+    // and endianness does not affect the order of values in a structure.
+    // Endianness 定义了多字节值中字节的顺序。
+    // 字符串是单字节值的数组。
+    // 因此，每个值（字符串中的字符）在小端和大端架构上都是相同的
+    // ，并且字节顺序不会影响结构中值的顺序。
     public String readZeroTerminatedString() throws IOException {
         ByteArrayOutputStream s = new ByteArrayOutputStream();
         for (int b; (b = this.read()) != 0; ) {

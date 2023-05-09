@@ -25,8 +25,8 @@ public class AjieTest {
 //        socketFactory.createSocket(socket,socket.getInetAddress().getHostName(),socket.getPort(),true);
 //        BinaryLogClient binaryLogClient = new BinaryLogClient();
 //        binaryLogClient.connect();
-        String hostname = "";
-        int port = 0;
+        String hostname = "121.5.106.124";
+        int port = 3306;
         Socket socket = new Socket();
         socket.connect((SocketAddress) new InetSocketAddress(hostname, port), 3000);
         InputStream inputStream = socket.getInputStream();
@@ -43,7 +43,7 @@ public class AjieTest {
 //           System.out.println("0x000000FF &(value>>>(i<<3))="+(0x000000FF &(value>>>(i<<3))));
 //
 //        }
-        BinaryLogClient client = new BinaryLogClient("47.92.89.144", 3306, "root", "Hive@20221101!");
+        BinaryLogClient client = new BinaryLogClient("121.5.106.124", 3306, "root", "ajie123456");
         client.setServerId(12345);
         client.registerEventListener(new BinaryLogClient.EventListener() {
             @Override
@@ -122,5 +122,15 @@ public class AjieTest {
         byte[] bytes1 = s.toByteArray();
         System.out.println(new String(bytes1));
         System.out.println(new String(bytes));
+    }
+    @Test
+    public void testPlus(){
+        byte[] bytes = new byte[]{11,2,3,4,5,6,7,8,9,10};
+       int  i=0;
+            System.out.println(bytes[i++]);
+        System.out.println(i);
+        byte[] b = new byte[] {53,46,55,46,52,49,45,108,111,103};
+        System.out.println(new String (b));
+
     }
 }
