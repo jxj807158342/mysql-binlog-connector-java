@@ -1,4 +1,30 @@
 # Changelog
+## [0.28.3](https://github.com/osheroff/mysql-binlog-connector-java/compare/0.28.3...0.28.1) - 2023-10-19
+
+- around patch around pulling column signed-ness
+- make mariadb_slave_compat field configurable
+
+## [0.28.1](https://github.com/osheroff/mysql-binlog-connector-java/compare/0.28.1...0.28.0) - 2023-07-07
+
+- Fix a signedness bug, see #108
+
+## [0.28.0](https://github.com/osheroff/mysql-binlog-connector-java/compare/0.28.0...0.27.6) - 2023-02-14
+
+- GTID performance improvements, thanks Janick Reynders
+
+## [0.27.6](https://github.com/osheroff/mysql-binlog-connector-java/compare/0.27.6...0.27.5) - 2023-01-19
+
+- minor performance improvements
+- fix isContainedWithin for mariadb events
+
+## [0.27.5](https://github.com/osheroff/mysql-binlog-connector-java/compare/0.27.5...0.27.4) - 2022-11-01
+
+- add mariadb BINLOG_CHECKPOINT event 
+
+## [0.27.4](https://github.com/osheroff/mysql-binlog-connector-java/compare/0.27.4...0.27.3) - 2022-11-01
+
+- move mariadb_slave_capability back to 4
+
 ## [0.27.3](https://github.com/osheroff/mysql-binlog-connector-java/compare/0.27.3...0.27.2) - 2022-09-25
 
 - pass use-annotate-rows through non-gtid mariadb connections

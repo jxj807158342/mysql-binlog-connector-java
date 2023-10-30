@@ -15,6 +15,8 @@
  */
 package com.github.shyiko.mysql.binlog.event;
 
+import java.util.stream.Stream;
+
 /**
  * @author <a href="mailto:stanley.shyiko@gmail.com">Stanley Shyiko</a>
  * @see <a href="https://dev.mysql.com/doc/internals/en/event-meanings.html">Event Meanings</a> for the original
@@ -212,13 +214,25 @@ public enum EventType {
      * @see <a href="https://mariadb.com/kb/en/replication-protocol/">Replication Protocol</a> for the original doc.
      */
     ANNOTATE_ROWS(160), //
+    BINLOG_CHECKPOINT(161),
     MARIADB_GTID(162),
     MARIADB_GTID_LIST(163);
 
+    private static final EventType[] TYPE_BY_EVENT_NUMBER = buildEventTypeIndex();
     private final int eventNumber;
 
     EventType(int eventNumber) {
         this.eventNumber = eventNumber;
+    }
+
+    private static EventType[] buildEventTypeIndex() {
+        EventType[] types = EventType.values();
+        int maxEventNumber = Stream.of(types).mapToInt(t -> t.eventNumber).max().orElse(-1);
+        EventType[] index = new EventType[maxEventNumber+1];
+        for (EventType type : types) {
+            index[type.eventNumber] = type;
+        }
+        return index;
     }
 
     public static boolean isRowMutation(EventType eventType) {
@@ -246,11 +260,6 @@ public enum EventType {
     }
 
     public static EventType byEventNumber(int num) {
-        for (EventType type : EventType.values()) {
-            if (type.eventNumber == num) {
-                return type;
-            }
-        }
-        return null;
+        return num >= 0 && num < TYPE_BY_EVENT_NUMBER.length ? TYPE_BY_EVENT_NUMBER[num] : null;
     }
 }

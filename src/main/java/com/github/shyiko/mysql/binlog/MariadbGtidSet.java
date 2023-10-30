@@ -1,5 +1,7 @@
 package com.github.shyiko.mysql.binlog;
 
+import com.github.shyiko.mysql.binlog.event.MySqlGtid;
+
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -113,6 +115,16 @@ public class MariadbGtidSet extends GtidSet {
         return true;
     }
 
+    public void addGtid(Object gtid) {
+        if (gtid instanceof MariaGtid) {
+            add((MariaGtid) gtid);
+        } else if (gtid instanceof String) {
+            add((String) gtid);
+        } else {
+            throw new IllegalArgumentException(gtid + " not supported");
+        }
+    }
+
     public void add(MariaGtid gtid) {
         positionMap.put(gtid.getDomainId(), gtid);
         addToSeenSet(gtid);
@@ -145,7 +157,7 @@ public class MariadbGtidSet extends GtidSet {
 
                 MariaGtid thisGtid = thisDomainMap.get(serverID);
                 MariaGtid otherGtid = otherDomainMap.get(serverID);
-                if ( thisGtid.sequence >= otherGtid.sequence )
+                if ( thisGtid.sequence > otherGtid.sequence )
                     return false;
             }
         }
